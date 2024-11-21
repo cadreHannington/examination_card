@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Reader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #content {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Document Viewer</h1>
+  <div id="content">
+    <p>Loading content...</p>
+  </div>
+
+  <script>
+    // URL of the file to load
+    const externalFileUrl = "QRCODEREADING.html"; // Replace this with the correct path if necessary.
+
+    // Fetch and inject the HTML file content
+    async function loadExternalFile() {
+      const contentDiv = document.getElementById("content");
+
+      try {
+        // Fetch the file content
+        const response = await fetch(externalFileUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to load the file: ${response.statusText}`);
+        }
+
+        // Read the HTML file content as text
+        const fileContent = await response.text();
+
+        // Insert the fetched HTML into the page
+        contentDiv.innerHTML = fileContent;
+      } catch (error) {
+        console.error("Error loading the file:", error);
+        contentDiv.innerHTML = `<p>Error: Could not load the document.</p>`;
+      }
+    }
+
+    // Load the file when the DOM is ready
+    document.addEventListener("DOMContentLoaded", loadExternalFile);
+  </script>
+</body>
+</html>
